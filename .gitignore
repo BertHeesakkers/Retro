@@ -4,4 +4,4 @@
 *.s64
 
 # local dump
-Dump/*
+C64/Dump/*
