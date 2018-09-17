@@ -1,0 +1,7 @@
+# generated files
+*.prg
+*.c64
+*.s64
+
+# local dump
+Dump/*
