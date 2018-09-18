@@ -13,7 +13,7 @@
 !byte $00,$00         ; end of program
 !byte $00,$00         ; padding to make sure actual code starts at correct adress
 
-initialization:
+init:
   jsr $e544           ; call Kernal (no typo) subroutine to clear the screen
 
 main:
