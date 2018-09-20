@@ -27,5 +27,5 @@ exit
   rts                 ; return from subroutine
 
 message
-  text "hello world!"
+  text 'hello world!'
   byte 0

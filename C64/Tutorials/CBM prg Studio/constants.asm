@@ -1,3 +1,16 @@
+;
+BITSET_BIT1SET            = #%0000001
+BITSET_BIT2SET            = #%0000010
+BITSET_BIT3SET            = #%0000100
+BITSET_BIT4SET            = #%0001000
+BITSET_BIT5SET            = #%0010000
+BITSET_BIT6SET            = #%0100000
+BITSET_BIT7SET            = #%1000000
+
+; memory addresses
+PROCESSOR_PORT_DATA_DIR   = $0000
+PROCESSOR_PORT            = $0001
+
 VIC_SPRITE0_X_COORD       = $D000
 VIC_SPRITE0_Y_COORD       = $D001
 VIC_SPRITE1_X_COORD       = $D002
