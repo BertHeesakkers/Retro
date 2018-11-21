@@ -4,6 +4,8 @@
 *.s64
 
 # local dump
+Amiga/Dump/*
 C64/Dump/*
 Game Boy Advance/Dump/*
 Game Boy Classic/Dump/*
+Nintendo DS/Dump/*
