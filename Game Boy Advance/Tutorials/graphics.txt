@@ -1,0 +1,56 @@
+GBA Graphics System
+-------------------
+
+Support for 6 different graphics modes and 4 background layers to display a scene.
+
+Mode 0:
+	- tiled
+	- all 4 background layers are available (no rotation/scaling)
+	- can create background layers larger than the screen for hardware scrolling
+
+Mode 1:
+	- tiled
+	- 3 background layers
+	- background layer 2 can rotate/scale
+	- background layer 0 and 1 are text or scrolling (non-rotate/scale) variant
+
+Mode 2:
+	- tiled
+	- 2 background layers
+	- background layer 2 and 3 can rotate/scale
+
+Mode 3:
+	- bitmapped (16 bit color)
+	- no backbuffer (full screen: 240 x 160 pixels)
+	- cuts into the available sprite data area (CLARIFY!)
+	- good for displaying still screens
+
+Mode 4:
+	- bitmapped (8 bit paletted color)
+	- limited use because you need to write 16 or 32 bits at once to VRAM (multiple pixels)
+	- backbuffer support (less memory needed for the full image)
+
+Mode 5:
+	- bitmapped (16 bit color)
+	- backbuffer (screen size: 160 x 128 pixels)
+	- used for 3d and animations
+	- uses background layer 2 only (which supports hardware rotation and scaling)
+	- rotate and scale to take up full 240 x 160 pixels
+
+Rendering process
+-----------------
+- 160 scan lines get rendered one by one
+	- HDraw (render a line), HBlank (move to start of next line)
+	- after line 160 there are 67 scanlines worth of VBlank 
+		- REG_VCOUNT register (16 bits at 0x4000006) contains the line being drawn
+		- if REG_VCOUNT > 16 -> in VBlank
+		- in assembly this looks like:
+
+		ldr r0,=#0x4000006		@ store address of REG_VCOUNT register in r0 (0x4000006)
+		waitVBlank:
+			ldrh r1, [r0]		@ read REG_VCOUNT register
+			cmp r1, #161		@ check for first line of VBlank (161)
+			bne waitVBlank		@ loop if not equal
+
+		- it would be better to solve this using interrupts; uses less cpu power
+

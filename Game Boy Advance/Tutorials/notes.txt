@@ -25,6 +25,8 @@ Registers:
 	       PC - 4    PC - 2    Decode
 	       PC - 8    PC - 4    Execute
 		   http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0084f/ch01s01s01.html)
+	- Program Status Register (PSR)
+		- ?
 
 
 Patater tutorials (https://patater.com/gbaguy/gba/ch2.htm) use arm-elf-gcc and arm-elf-objcopy. Replace there with arm-none-eabi-gcc and arm-none-eabi-objcopy, respectively (https://devkitpro.org/viewtopic.php?f=2&t=8660). To be found in the %DEVKITPRO%\devkitARM\bin folder. The commands to compile and link:
@@ -55,6 +57,35 @@ Numbers are calculated by the CPU starting with the least significant digits so 
 
 ARM Instruction set
 -------------------
+ADD
+	- store SUM of second and third operand in first operand
+	- optional shift of last operand
+	- format: INSTRUCTION DEST, OPERAND2, OPERAND3 [, SHIFTER OP #Number or Register]
+	- add s to instruction to set status flags
+
+AND
+	- store logical AND of second and third operand in first operand
+	- optional shift of last operand
+	- format: INSTRUCTION DEST, OPERAND2, OPERAND3 [, SHIFTER OP #Number or Register]
+	- add s to instruction to set status flags
+
+BIC (UNSURE WHEN THIS WOULD BE USEFUL)
+	- store logical AND of second and third operand in first operand
+	- bit set in second operand are cleared in the first (&~: and followed by bit inversion)
+	- optional shift of last operand
+	- format: INSTRUCTION DEST, OPERAND2, OPERAND3 [, SHIFTER OP #Number or Register]
+	- add s to instruction to set status flags
+
+CMP
+	- compare first and second operand and stores result in status flag
+	- never modifies the registers
+
+EOR
+	- store exclusive OR of second and third operand in first operand
+	- optional shift of last operand
+	- format: INSTRUCTION DEST, OPERAND2, OPERAND3 [, SHIFTER OP #Number or Register]
+	- add s to instruction to set status flags
+
 LDMIA
 	- load multiple registers
 	- uses comma-separated list of low registers or low-register ranges (r0 - r7)
@@ -75,6 +106,19 @@ LDRSH
 	- load a signed halfword
 	- (sign-extend fills the upper bits with the highest bit of the loaded value)
 
+MOV
+	- move numbers between registers
+	- can include a shift operation
+	- mov reg1, reg2 {LSL, LSR, ASR, RORO, RRX #X}
+	- mov reg1, reg1 ; NOP
+	- MOV is needed to shift a number; no standalone shift operation is available
+
+ORR
+	- store bitwise OR of second and third operand in first operand
+	- optional shift of last operand
+	- format: INSTRUCTION DEST, OPERAND2, OPERAND3 [, SHIFTER OP #Number or Register]
+	- add s to instruction to set status flags
+
 STR
 	- store (write) a value into memory
 	- NB restrictions on literal value for STR and MOV the number should be created by shifting up a byte sized value
@@ -85,12 +129,18 @@ STRH
 STRB
 	- store a byte
 
-MOV
-	- move numbers between registers
-	- can include a shift operation
-	- mov reg1, reg2 {LSL, LSR, ASR, RORO, RRX #X}
-	- mov reg1, reg1 ; NOP
-	- MOV is needed to shift a number; no standalone shift operation is available
+SUB
+	- store result of subtracting third from second operand in first operand
+	- optional shift of last operand
+	- format: INSTRUCTION DEST, OPERAND2, OPERAND3 [, SHIFTER OP #Number or Register]
+	- add s to instruction to set status flags
+
+SUBR
+	- reverse subtraction
+	- store result of subtracting secong from third operand in first operand
+	- optional shift of last operand
+	- format: INSTRUCTION DEST, OPERAND2, OPERAND3 [, SHIFTER OP #Number or Register]
+	- add s to instruction to set status flags
 
 ASSEMBLER DIRECTIVES
 --------------------

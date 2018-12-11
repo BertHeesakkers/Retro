@@ -9,6 +9,10 @@ GBA tutorials (TONC)
 	- https://www.coranac.com/tonc/text/toc.htm
 	- http://www.coranac.com/documents/taptngba/
 
+CowBite Virtual Hardware Specifications (Unofficial documentation for the CowBite GBA emulator)
+	- https://www.cs.rit.edu/~tjh8300/CowBite/CowBiteSpec.htm
+	- http://www.cs.rit.edu/~tjh8300/CowBite/CowBiteSpec.zip (contains header file with defines)
+	
 http://pages.cs.wisc.edu/~meade/gbadev/hengbad.html
 https://www.reinterpretcast.com/writing-a-game-boy-advance-game
 
