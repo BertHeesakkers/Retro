@@ -1,0 +1,113 @@
+GBA processor type: 32bit ARM7tdmi
+Instruction sets:
+	ARM:
+		- multifunctional
+		- can incorporate a shift instruction within
+		- opcode length fixed at 32 bits
+		- all opcodes can be executed conditionally
+        - slower than THUMB in ROM
+
+	THUMB:
+		- usually one function
+		- opcode length fixed at 16 bits
+		- only branches can be conditional
+		- can't turn condition setting off
+
+Registers:
+	- 16 32bit registers
+	- first 7 (r0 to r6) are available in THUMB mode
+	- r0 - r12: general purpose registers (GPR)
+	-      r13: ususally a stack pointer; if no stack is used: consider this to be a GPR
+	-      r14: link register to hold return addresses for branch and link instructions (sub-routine calls); can be used as a GPR
+	-      r15: PC register; holds the address +8 of current instruction (ARM7 has a 3 stage pipeline:
+	       ARM       THUMB
+	       PC        PC        Fetch
+	       PC - 4    PC - 2    Decode
+	       PC - 8    PC - 4    Execute
+		   http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0084f/ch01s01s01.html)
+
+
+Patater tutorials (https://patater.com/gbaguy/gba/ch2.htm) use arm-elf-gcc and arm-elf-objcopy. Replace there with arm-none-eabi-gcc and arm-none-eabi-objcopy, respectively (https://devkitpro.org/viewtopic.php?f=2&t=8660). To be found in the %DEVKITPRO%\devkitARM\bin folder. The commands to compile and link:
+
+arm-none-eabi-gcc -o test.elf -specs=gba.specs test.S	// compile test.S to test.elf
+arm-none-eabi-objcopy -O binary test.elf test.gba		// copy binary file to another format https://manned.org/arm-none-eabi-objcopy#head3
+gbafix test.gbafix 										// The gbafix.exe tool is needed to generate a valid GBA header (needed when running the binary file on actual hardware)
+
+Notes on alignment:
+	- align your data; use .align .align 4, 16bit = .align 2 (UNCLEAR!)
+	- memory access is slow; use registers (use a MOV and ADD to load a 32bit value, instead of an LDR from ROM)
+
+
+ARM addressing modes
+--------------------
+
+ARM data sizes
+--------------
+ WORD     = 32 bits
+ HALFWORD = 16 bits
+ BYTE     =  8 bits
+(NIBBLE   =  4 bits)
+
+MEMORY FORMATS
+--------------
+The ARM7TDMI processor is bi-endian (traditionally the default format is little endian)
+Numbers are calculated by the CPU starting with the least significant digits so little-endian numbers are already set up for the processing order.
+
+ARM Instruction set
+-------------------
+LDMIA
+	- load multiple registers
+	- uses comma-separated list of low registers or low-register ranges (r0 - r7)
+	- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0068b/BABEFCIB.html
+
+LDRB
+	- load a byte
+	- (zero-extend fills the upper bits with 0)
+
+LDR
+	- load (read) a value from memory
+	- ldr r0,=0x32bitnumber
+
+LDRH
+	- load halfword
+
+LDRSH
+	- load a signed halfword
+	- (sign-extend fills the upper bits with the highest bit of the loaded value)
+
+STR
+	- store (write) a value into memory
+	- NB restrictions on literal value for STR and MOV the number should be created by shifting up a byte sized value
+
+STRH
+	- store a halfword
+
+STRB
+	- store a byte
+
+MOV
+	- move numbers between registers
+	- can include a shift operation
+	- mov reg1, reg2 {LSL, LSR, ASR, RORO, RRX #X}
+	- mov reg1, reg1 ; NOP
+	- MOV is needed to shift a number; no standalone shift operation is available
+
+ASSEMBLER DIRECTIVES
+--------------------
+http://www2.phys.canterbury.ac.nz/dept/docs/manuals/unix/DEC_5.0a_Docs/HTML/ARH9LATE/DRCTVCHP.HTM
+--------------------
+.arm
+	- http://www.keil.com/support/man/docs/armasm/armasm_dom1361290003124.htm
+
+.global
+	- http://www.keil.com/support/man/docs/armasm/armasm_dom1361290009343.htm
+
+.ltorg
+	- instruct the assembler to assemble the current literal pool immediately
+	- http://www.keil.com/support/man/docs/armasm/armasm_dom1361290018422.htm
+
+.macro
+	- http://downloads.ti.com/docs/esd/SPNU118O/Content/SPNU118O_HTML/macro_language_description.html#STDZ0730691
+
+.text
+	- http://downloads.ti.com/docs/esd/SPNU118O/Content/SPNU118O_HTML/assembler_directives.html#IDtextdesc

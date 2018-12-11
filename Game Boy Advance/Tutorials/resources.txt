@@ -1,0 +1,15 @@
+GBA Assembly tutorials: https://patater.com/gbaguy/gba/ch1.htm
+
+GBA Programming book: 
+	- https://www.aaronrogers.com/ham/Books/PTGBA/ (http://www.freeinfosociety.com/media/pdf/2901.pdf)
+	- needs HAM library
+	- resources for the book could be requested directly from the author (http://jharbour.com/?page_id=19)
+
+GBA tutorials (TONC)
+	- https://www.coranac.com/tonc/text/toc.htm
+	- http://www.coranac.com/documents/taptngba/
+
+http://pages.cs.wisc.edu/~meade/gbadev/hengbad.html
+https://www.reinterpretcast.com/writing-a-game-boy-advance-game
+
+http://members.iinet.net.au/~freeaxs/gbacomp/
