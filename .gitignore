@@ -4,8 +4,10 @@
 *.s64
 
 # local dump
+Amiga/Dump/*
 C64/Dump/*
 C64/Tools/C64StudioRelease/*
 C64/Tools/WinVICE-3.1-x64/*
 Game Boy Advance/Dump/*
 Game Boy Classic/Dump/*
+Nintendo DS/Dump/*
