@@ -25,9 +25,12 @@ Registers:
 	       PC - 4    PC - 2    Decode
 	       PC - 8    PC - 4    Execute
 		   http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0084f/ch01s01s01.html)
-	- Program Status Register (PSR)
-		- ?
-
+	- provides two (or three) processor status registers (PSRs)
+		- Application PSR (APSR),
+		- Current PSR (CPSR), and 
+		- Saved PSR (SPSR)
+		(http://lioncash.github.io/ARMBook/the_apsr,_cpsr,_and_the_difference_between_them.html)
+		(https://www.quora.com/What-is-the-difference-between-CPSR-and-SPSR-in-ARM-processor)
 
 Patater tutorials (https://patater.com/gbaguy/gba/ch2.htm) use arm-elf-gcc and arm-elf-objcopy. Replace there with arm-none-eabi-gcc and arm-none-eabi-objcopy, respectively (https://devkitpro.org/viewtopic.php?f=2&t=8660). To be found in the %DEVKITPRO%\devkitARM\bin folder. The commands to compile and link:
 
@@ -113,6 +116,11 @@ MOV
 	- mov reg1, reg1 ; NOP
 	- MOV is needed to shift a number; no standalone shift operation is available
 
+MRS
+	- moves the value of CPSR or the current SPSR into a general-purpose register
+	- mrs reg, CPSR
+	- mrs reg, SPSR
+	
 ORR
 	- store bitwise OR of second and third operand in first operand
 	- optional shift of last operand
