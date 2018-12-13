@@ -17,3 +17,11 @@ http://pages.cs.wisc.edu/~meade/gbadev/hengbad.html
 https://www.reinterpretcast.com/writing-a-game-boy-advance-game
 
 http://members.iinet.net.au/~freeaxs/gbacomp/
+
+GBATek:
+	http://www.akkit.org/info/gbatek.htm (Gameboy Advance / Nintendo DS - Technical Info - Extracted from no$gba version 2.5)
+
+
+ARM Tutorial
+------------
+https://azeria-labs.com/writing-arm-assembly-part-1/
